@@ -4,6 +4,10 @@ import storage from "redux-persist/lib/storage";
 import commentReducers from "./commentReducers"; 
 import userReducers from "./userReducers";
 import userPhotoReducers from "./userPhotoReducers";
+import productShowReducers from "./productShowReducers";
+import CounterReducer from "./CounterReducer";
+
+
 
 
 
@@ -18,6 +22,10 @@ const rootReducer = combineReducers({
   comments: commentReducers,
   users: userReducers,
   usersphoto: userPhotoReducers,
+  productshow: productShowReducers,
+  counterreducer: CounterReducer,
+
+
 
 });
 // export default rootReducer;

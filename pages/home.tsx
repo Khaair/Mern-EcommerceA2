@@ -1,78 +1,16 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { fetchPosts } from "../state-management/actions/productshow";
 
-export default function EcomHome() {
-  const productdata = [
-    {
-      productId: 1,
-      id: 1,
-      title: "Buffalo burgers A",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 2,
-      id: 2,
-      title: "Buffalo burgers B",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 3,
-      id: 3,
-      title: "Buffalo burgers C",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 4,
-      id: 4,
-      title: "Buffalo burgers D",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 5,
-      id: 5,
-      title: "Buffalo burgers E",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 6,
-      id: 6,
-      title: "Buffalo burgers F",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 7,
-      id: 7,
-      title: "Buffalo burgers G",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 8,
-      id: 8,
-      title: "Buffalo burgers H",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 9,
-      id: 9,
-      title: "Buffalo burgers I",
-      type: "Wild salmon",
-      price: 290,
-    },
-    {
-      productId: 10,
-      id: 10,
-      title: "Buffalo burgers J",
-      type: "Wild salmon",
-      price: 290,
-    },
-  ];
+function EcomHome({ posts, postsInfo }: any) {
+  const [data, setData] = useState([]);
+  console.log(data, "data is here");
+  // dispatch post and comments
+  useEffect(() => {
+    posts();
+  }, [posts]);
+  console.log(postsInfo?.postsData, "postsInfo?.postsData hereeeeeee");
 
   const [items, setItems] = useState([]);
 
@@ -193,13 +131,7 @@ export default function EcomHome() {
         <div className="feature-product-area e-com-section-padding-small">
           <div className="container">
             <div className="row">
-              <div className="col-lg-12 text-center">
-                <h2>{items.length}</h2>
-              </div>
-            </div>
-
-            <div className="row">
-              {productdata?.map((product: any, index: any) => {
+              {postsInfo?.postsData?.map((product: any, index: any) => {
                 const productDetails = {
                   productId: product?.productId,
                   price: product?.price,
@@ -209,17 +141,14 @@ export default function EcomHome() {
                   <div key={index} className="col-lg-3">
                     <div className="dgarma-product-show-card">
                       <div className="dgarma-product-show-img text-center">
-                        <img
-                          src="/img/f-s-1.jpg"
-                          alt="dgarma-product-show-img"
-                        />
+                        <img src={product?.url} alt="dgarma-product-show-img" />
                       </div>
                       <div className="dgarma-product-show-card-content">
                         <h3>{product?.title}</h3>
-                        <span>Wild salmon</span>
+                        <span>{product?.category}</span>
                         <div className="dgarma-product-show-wrapper">
                           <p>
-                            <span>Price:</span>৳ 290.00
+                            <span>Price:</span>৳ {product?.price}
                           </p>
                           <button
                             onClick={() => addToCart(productDetails)}
@@ -240,3 +169,17 @@ export default function EcomHome() {
     </>
   );
 }
+
+const mapStateToProps = (state: { posts: any; comments: any; users: any }) => {
+  return {
+    postsInfo: state?.posts,
+    commentInfo: state?.comments,
+    userInfo: state?.users,
+  };
+};
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    posts: () => dispatch(fetchPosts()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EcomHome);

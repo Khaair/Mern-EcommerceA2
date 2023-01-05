@@ -1057,6 +1057,7 @@ color: aliceblue;
     border: none;
     color: white;
     font-size: 12px;
+    margin-top: 10px;
 }
 .dgarma-product-show-card-content h3 {
     font-size: 16px;
@@ -1160,4 +1161,10 @@ input[type=submit]:hover {
   text-align: left;
   background-color: #04AA6D;
   color: white;
+}
+
+
+
+.add-product-margin label{
+  margin-top: 12px;
 }

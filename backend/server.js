@@ -89,16 +89,12 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 
 const routes = require("./app/routes/crudRoutes");
-const routespost = require("./app/routes/postRoutes");
 const routesuserget = require("./app/routes/userGetRoutes");
-const routescomment = require("./app/routes/commentRoutes");
-const routesuserphotos = require("./app/routes/userPhotosRoutes");
+const routesproductadd = require("./app/routes/productAddRoutes");
 
 app.use("/api", routes);
-app.use("/api", routespost);
 app.use("/api", routesuserget);
-app.use("/api", routescomment);
-app.use("/api", routesuserphotos);
+app.use("/api", routesproductadd);
 
 // const routess = require("./app/routes/crudRoutes");
 // app.use("/ap", routess);

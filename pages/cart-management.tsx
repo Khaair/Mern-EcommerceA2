@@ -40,7 +40,7 @@ export default function EcommerceHomePage() {
                       <code>{JSON.stringify(arr, null, 4)}</code>
                     </pre> */}
 
-                  <table className="table">
+                  <table id="customers">
                     <thead>
                       <tr>
                         <th scope="col">No</th>
