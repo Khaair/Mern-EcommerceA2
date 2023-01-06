@@ -1,16 +1,20 @@
+import { notification } from "antd";
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Layout from "../layouts/index";
 
 export default function BillingAddress() {
   const [items, setItems] = useState([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState<any>();
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [url, setUrl] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [notificationMsg, setNotificationMsg] = useState("");
+
+  const [errormsg, setErrormsg] = useState("");
 
   useEffect(() => {
     // Get the existing cart from local storage
@@ -31,38 +35,51 @@ export default function BillingAddress() {
   }
 
   const total = calculateTotal(items);
+  const router = useRouter();
 
   const openNotification = () => {
     notification.open({
       message: notificationMsg,
     });
   };
-
   const sendDatatoApp = async () => {
-    try {
-      let x = await axios.post("http://localhost:8080/api/product-add", {
-        title,
-        description,
-        price,
-        category,
-        quantity,
-        url,
-      });
+    if (fullname && address && city && postcode && email && phone) {
+      try {
+        let x = await axios.post(
+          "http://localhost:8080/api/billing-address-add",
+          {
+            fullname,
+            address,
+            city,
+            postcode,
+            email,
+            phone,
+            subtotal: total,
+            total: total,
+            cart: items,
+          }
+        );
 
-      if (x.status === 200) {
-        openNotification();
-        setNotificationMsg(x?.data?.message);
+        if (x.status === 200) {
+          openNotification();
+          setErrormsg("");
+
+          setNotificationMsg(x?.data?.message);
+          router.push("/checkout");
+        }
+
+        console.log(x.status, "success");
+      } catch (er) {
+        if (er) {
+          openNotification();
+          setNotificationMsg("Please provide correct information");
+        }
       }
-
-      console.log(x.status, "success");
-    } catch (er) {
-      if (er) {
-        openNotification();
-
-        setNotificationMsg("Please provide correct information");
-      }
+    } else {
+      setErrormsg("All fields are requerd");
     }
   };
+
   return (
     <Layout>
       <div className="billing-address-area mt-5">
@@ -70,14 +87,14 @@ export default function BillingAddress() {
           <div className="row">
             <div className="col-lg-6">
               <div>
-                <h3>Billing Details</h3>
+                <h3>Billing details</h3>
                 <form action="">
                   <div className="form-group">
                     <label htmlFor="">Full Name </label>
                     <input
                       className="form-control"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      value={fullname}
+                      onChange={(e) => setFullname(e.target.value)}
                       style={{ marginTop: "12px" }}
                       placeholder="Enter full name"
                       required
@@ -87,9 +104,9 @@ export default function BillingAddress() {
                     <label htmlFor="">Address</label>
                     <input
                       className="form-control"
-                      value={description}
+                      value={address}
                       style={{ marginTop: "12px" }}
-                      onChange={(e) => setDescription(e.target.value)}
+                      onChange={(e) => setAddress(e.target.value)}
                       placeholder="Enter address"
                       required
                     />
@@ -98,9 +115,8 @@ export default function BillingAddress() {
                     <label htmlFor="">City </label>
                     <input
                       className="form-control"
-                      type="number"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
                       style={{ marginTop: "12px" }}
                       placeholder="Enter town"
                       required
@@ -110,8 +126,8 @@ export default function BillingAddress() {
                     <label htmlFor="">Postcode</label>
                     <input
                       className="form-control"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
+                      value={postcode}
+                      onChange={(e) => setPostcode(e.target.value)}
                       style={{ marginTop: "12px" }}
                       placeholder="Enter postcode"
                       required
@@ -121,8 +137,8 @@ export default function BillingAddress() {
                     <label htmlFor="">Email Address </label>
                     <input
                       className="form-control"
-                      value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       style={{ marginTop: "12px" }}
                       placeholder="Enter email address"
                       required
@@ -132,13 +148,15 @@ export default function BillingAddress() {
                     <label htmlFor="">Phone</label>
                     <input
                       className="form-control"
-                      value={url}
-                      onChange={(e) => setUrl(e.target.value)}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       style={{ marginTop: "12px" }}
                       placeholder="Enter phone number"
                       required
                     />
                   </div>
+                  <h4 className="text-danger">{errormsg}</h4>
+
                   <div className="save-btn-area">
                     <button
                       className="btn btn-primary mt-3"

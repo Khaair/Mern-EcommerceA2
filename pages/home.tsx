@@ -133,7 +133,7 @@ function EcomHome({ posts, postsInfo }: any) {
             <div className="row">
               {postsInfo?.postsData?.map((product: any, index: any) => {
                 const productDetails = {
-                  productId: product?.productId,
+                  productId: product?._id,
                   price: product?.price,
                   title: product?.title,
                 };

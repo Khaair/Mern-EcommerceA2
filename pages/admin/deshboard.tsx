@@ -6,7 +6,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import { Card, MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import ProductAdd from "./product-add";
 import Link from "next/link";
@@ -31,9 +31,9 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem(
-    "Home",
+    "Deshboard",
     "1",
-    <Link href="/">
+    <Link href="/admin">
       {" "}
       <PieChartOutlined />
     </Link>
@@ -56,7 +56,13 @@ const items: MenuItem[] = [
     getItem("Alex", "5"),
   ]),
   getItem("Order", "sub3", <TeamOutlined />, [
-    getItem("Order Manage", "6"),
+    getItem(
+      "Order Manage",
+      "6",
+      <Link href="/order-manage">
+        <PieChartOutlined />
+      </Link>
+    ),
     getItem("Order Track", "8"),
   ]),
 
@@ -95,8 +101,47 @@ const Deshboard: React.FC = () => {
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            <Breadcrumb.Item>Current Report</Breadcrumb.Item>
+          </Breadcrumb>
+          <div
+            style={{
+              padding: 24,
+              minHeight: 500,
+              background: colorBgContainer,
+            }}
+          >
+            <div className="row">
+              <div className="col-lg-3">
+                <Card>
+                  <h3>5000</h3>
+                  <p>Daily Signups</p>
+                </Card>
+              </div>
+              <div className="col-lg-3">
+                <Card>
+                  <h3>79,503</h3>
+                  <p>Daily Visitors</p>
+                </Card>
+              </div>
+              <div className="col-lg-3">
+                <Card>
+                  <h3>15,503</h3>
+                  <p>Daily Order</p>
+                </Card>
+              </div>
+
+              <div className="col-lg-3">
+                <Card>
+                  <h3> $98,503</h3>
+                  <p>Daily Revenue</p>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </Content>
+        <Content style={{ margin: "0 16px" }}>
+          <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>Sales Report</Breadcrumb.Item>
           </Breadcrumb>
           <div
             style={{
@@ -105,7 +150,36 @@ const Deshboard: React.FC = () => {
               background: colorBgContainer,
             }}
           >
-            Bill is a cat.
+            <div className="row">
+              <div className="col-lg-3">
+                <Card title="Default size card" extra={<a href="#">More</a>}>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                </Card>
+              </div>
+              <div className="col-lg-3">
+                <Card title="Default size card" extra={<a href="#">More</a>}>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                </Card>
+              </div>
+              <div className="col-lg-3">
+                <Card title="Default size card" extra={<a href="#">More</a>}>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                </Card>
+              </div>
+              <div className="col-lg-3">
+                <Card title="Default size card" extra={<a href="#">More</a>}>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                  <p>Card content</p>
+                </Card>
+              </div>
+            </div>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>BD Ecommerce ©2023 ANTD</Footer>

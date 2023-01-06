@@ -54,7 +54,7 @@ export default function EcommerceHomePage() {
                       {items?.map((product: any, index: any) => {
                         return (
                           <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <td scope="row">{index + 1}</td>
                             <td>{product?.title}</td>
                             <td>{product?.price}</td>
                             <td>1</td>

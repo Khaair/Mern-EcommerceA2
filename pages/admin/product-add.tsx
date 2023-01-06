@@ -32,9 +32,9 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem(
-    "Home",
+    "Deshboard",
     "1",
-    <Link href="/">
+    <Link href="/admin">
       {" "}
       <PieChartOutlined />
     </Link>
@@ -56,19 +56,18 @@ const items: MenuItem[] = [
     getItem("Bill", "4"),
     getItem("Alex", "5"),
   ]),
-  getItem("Team", "sub3", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
+  getItem("Order", "sub3", <TeamOutlined />, [
+    getItem(
+      "Order Manage",
+      "6",
+      <Link href="/order-manage">
+        <PieChartOutlined />
+      </Link>
+    ),
+    getItem("Order Track", "8"),
   ]),
-  getItem(
-    "Option 1",
-    "1",
-    <Link href="/product-add">
-      {" "}
-      <PieChartOutlined />
-    </Link>
-  ),
-  getItem("Option 2", "2", <DesktopOutlined />),
+
+  getItem("Customer", "2", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 

@@ -91,10 +91,12 @@ require("./app/routes/user.routes")(app);
 const routes = require("./app/routes/crudRoutes");
 const routesuserget = require("./app/routes/userGetRoutes");
 const routesproductadd = require("./app/routes/productAddRoutes");
+const routesbillingaddress = require("./app/routes/billingAddressRoutes");
 
 app.use("/api", routes);
 app.use("/api", routesuserget);
 app.use("/api", routesproductadd);
+app.use("/api", routesbillingaddress);
 
 // const routess = require("./app/routes/crudRoutes");
 // app.use("/ap", routess);
