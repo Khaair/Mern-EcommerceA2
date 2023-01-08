@@ -1,11 +1,14 @@
 import axios from "axios";
+import moment from "moment";
 import { useState, useEffect } from "react";
 import Layout from "../layouts";
 
 export default function checkout() {
   const [data, setData] = useState([]);
+  const [singlePostInfo, setSinglePostInfo] = useState<any>(undefined);
 
   console.log(data, "data checkout");
+  console.log(singlePostInfo, "singlePostInfo checkout");
 
   const fetchdata = async () => {
     try {
@@ -20,12 +23,32 @@ export default function checkout() {
   useEffect(() => {
     fetchdata();
   }, []);
+
+  const [myString, setMyString] = useState(null);
+
+  useEffect(() => {
+    const getorderNumber = localStorage.getItem("orderNumber");
+
+    const singlePosts = data?.find((post: any) => {
+      console.log(post?.ordernumber, "haha");
+      if (post?.ordernumber === getorderNumber) {
+        return {
+          ...post,
+        };
+      }
+    });
+    setSinglePostInfo(singlePosts);
+  }, [data]);
+
   return (
     <Layout>
       <div className="checkout-ara">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
+              {/* <pre>
+                <code>{JSON.stringify(singlePostInfo, null, 4)}</code>
+              </pre> */}
               <div className="checkout-title text-center">
                 <h2>Check Out</h2>
               </div>
@@ -37,15 +60,15 @@ export default function checkout() {
 
             <div className="col-lg-3">
               <p>ORDER NUMBER: </p>
-              <p>1548</p>
+              <p>{singlePostInfo?.ordernumber}</p>
             </div>
             <div className="col-lg-3">
               <p> DATE:</p>
-              <p>January 6, 2023</p>
+              <p>{moment(singlePostInfo?.date).format("lll")}</p>
             </div>
             <div className="col-lg-3">
               <p>TOTAL:</p>
-              <p>৳ 210.00</p>
+              <p>৳ {singlePostInfo?.total}</p>
             </div>
             <div className="col-lg-3">
               <p>PAYMENT METHOD:</p>
@@ -61,23 +84,23 @@ export default function checkout() {
                   <th>Product</th>
                   <th>Total</th>
                 </tr>
-                {/* {items?.map((product: any, index: any) => {
+                {singlePostInfo?.cart.map((product: any, index: any) => {
                   return (
                     <tr key={index}>
                       <td>{product?.title}</td>
                       <td>{product?.price}</td>
                     </tr>
                   );
-                })} */}
+                })}
 
                 <tr>
                   <td>Sub total</td>
-                  <td>Sub total</td>
+                  <td>৳ {singlePostInfo?.total}</td>
                 </tr>
 
                 <tr>
                   <td>Total</td>
-                  <td>Total</td>
+                  <td>৳ {singlePostInfo?.total}</td>
                 </tr>
               </table>
             </div>

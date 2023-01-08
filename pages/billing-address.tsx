@@ -13,8 +13,9 @@ export default function BillingAddress() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notificationMsg, setNotificationMsg] = useState("");
-
   const [errormsg, setErrormsg] = useState("");
+  const [orderNumber, setOrderNumber] = useState<any>();
+  console.log(orderNumber, "orderNumber");
 
   useEffect(() => {
     // Get the existing cart from local storage
@@ -42,8 +43,16 @@ export default function BillingAddress() {
       message: notificationMsg,
     });
   };
+  useEffect(() => {
+    const GenerateOrderNumber = Math.floor(Math.random() * 100000) + 1;
+    setOrderNumber(GenerateOrderNumber);
+  }, []);
+
+  const currentTime = new Date();
+
   const sendDatatoApp = async () => {
     if (fullname && address && city && postcode && email && phone) {
+      localStorage.setItem("orderNumber", JSON.stringify(orderNumber));
       try {
         let x = await axios.post(
           "http://localhost:8080/api/billing-address-add",
@@ -57,6 +66,8 @@ export default function BillingAddress() {
             subtotal: total,
             total: total,
             cart: items,
+            ordernumber: orderNumber,
+            date: currentTime,
           }
         );
 
@@ -85,7 +96,7 @@ export default function BillingAddress() {
       <div className="billing-address-area mt-5">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-6 billing-details-bg">
               <div>
                 <h3>Billing details</h3>
                 <form action="">
@@ -159,7 +170,7 @@ export default function BillingAddress() {
 
                   <div className="save-btn-area">
                     <button
-                      className="btn btn-primary mt-3"
+                      className="btn btn-success mt-3"
                       type="button"
                       onClick={sendDatatoApp}
                     >
@@ -170,8 +181,8 @@ export default function BillingAddress() {
               </div>
             </div>
             <div className="col-lg-6">
-              <h3>Your order</h3>
-              <table id="customers">
+              <h3 className="billing-details-bg">Your order</h3>
+              <table className="billing-details-bg" id="cart">
                 <tr>
                   <th>Product</th>
                   <th>Total</th>

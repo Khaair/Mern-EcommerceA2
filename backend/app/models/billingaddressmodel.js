@@ -38,6 +38,14 @@ const billingAddressSchema = new Schema({
     type: String,
     required: true,
   },
+  ordernumber: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("billingaddresssmodel", billingAddressSchema);

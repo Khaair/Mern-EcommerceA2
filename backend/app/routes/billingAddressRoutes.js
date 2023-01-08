@@ -18,6 +18,8 @@ router.post("/billing-address-add", async (req, res) => {
     cart: req.body.cart,
     subtotal: req.body.subtotal,
     total: req.body.total,
+    ordernumber: req.body.ordernumber,
+    date: req.body.date,
   });
 
   try {
@@ -61,6 +63,8 @@ router.post("/update-billing-address/:id", async (req, res) => {
         cart: req.body.cart,
         subtotal: req.body.subtotal,
         total: req.body.total,
+        ordernumber: req.body.ordernumber,
+        date: req.body.date,
       }
     );
 
