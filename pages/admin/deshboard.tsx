@@ -46,6 +46,13 @@ const items: MenuItem[] = [
         <PieChartOutlined />
       </Link>
     ),
+    getItem(
+      "Product List",
+      "2",
+      <Link href="/product-list">
+        <PieChartOutlined />
+      </Link>
+    ),
     getItem("Bill", "4"),
     getItem("Alex", "5"),
   ]),
@@ -66,7 +73,7 @@ const items: MenuItem[] = [
     getItem("Order Track", "8"),
   ]),
 
-  getItem("Customer", "2", <DesktopOutlined />),
+  getItem("Customer", "3", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 

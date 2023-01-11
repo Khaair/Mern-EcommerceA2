@@ -443,9 +443,10 @@ padding-left: 97px;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  height: 60px;
-  width: 373px;
+  height: 49px;
+  width: 352px;
   padding-left: 20px;
+  margin-top: 17px;
 }
 
 .post-profile-card{
@@ -960,7 +961,7 @@ display: flex;
         width: 100px;
     }
 .banner-content-wrapper{
-    padding-top: 210px;
+padding-top: 117px;
 color: aliceblue;
 }
 .banner-btn-wrapper .first-banner-btn{
@@ -1022,8 +1023,8 @@ color: aliceblue;
     padding: 22px 22px 15px 22px;
     width: 100%;
     height: 100%;
-    /* background: #FFFFFF 0% 0% no-repeat padding-box; */
-    /* box-shadow: 0px 3px 21px #0000001a; */
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 21px #0000001a;
     border-radius: 10px;
     opacity: 1;
 }
@@ -1051,7 +1052,7 @@ color: aliceblue;
 .dgarma-product-show-wrapper button {
     width: auto;
     height: 25px;
-    background: #00203A 0% 0% no-repeat padding-box;
+    background: #26ABD4 no-repeat padding-box;
     border-radius: 4px;
     opacity: 1;
     border: none;
@@ -1090,7 +1091,7 @@ color: aliceblue;
 }
 
 .featured-product-span{
-    border: 1px solid black;
+    border: 4px solid #16B270;
     position: absolute;
     width: 100px;
     right: 47%;
@@ -1113,15 +1114,7 @@ color: aliceblue;
 
 
 
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+
 
 input[type=submit] {
   width: 100%;
@@ -1172,7 +1165,6 @@ input[type=submit]:hover {
 #cart td {
   padding: 6px;
   border-bottom: 1px solid #ddd;
-  background-color: #F9F9F9;
 
 }
 
@@ -1199,7 +1191,8 @@ input[type=submit]:hover {
 }
 
 .billing-details-bg{
-  background-color: #DDDDDD;
+  border: 1px solid #EBEBEB;
+  
   padding: 12px;
 }
 
@@ -1241,4 +1234,29 @@ input[type=submit]:hover {
 
 .cart-product-img{
   height: 90px;
+}
+
+
+.checkout-print-wrapper{
+  padding: 20px;
+}
+
+.billing-address-border{
+  border: 1px solid #EBEBEB;
+  padding-top: 24px;
+  padding-right: 160px;
+}
+
+.searchres-detais-area{
+  position: absolute;
+}
+
+.image-magnify-gallery div {
+  z-index: 9;
+  
+}
+
+.image-magnify-gallery img {
+  max-width: none;
+ 
 }

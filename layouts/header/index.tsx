@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import SearchBar from "../../pages/searchBar";
 
 export default function Header() {
   const [items, setItems] = useState([]);
@@ -26,20 +27,21 @@ export default function Header() {
                 </Link>
               </div>
             </div>
-            <div className="col-lg-8">
+            <div className="col-lg-4">
+              <SearchBar />
+            </div>
+            <div className="col-lg-4">
               <div className="menubar-content">
                 <ul>
+                  <li> </li>
                   <Link href="/">
                     <li>Home</li>
                   </Link>
-                  <li>About Us</li>
-
-                  <li>International</li>
 
                   <Link href="/profile">
                     <li role="button">Profile</li>
                   </Link>
-                  <Link href="/admin">
+                  <Link href="admin">
                     <li>Admin</li>
                   </Link>
                   <Link href="/cart-management">

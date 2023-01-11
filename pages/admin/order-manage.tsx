@@ -47,6 +47,13 @@ const items: MenuItem[] = [
         <PieChartOutlined />
       </Link>
     ),
+    getItem(
+      "Product List",
+      "2",
+      <Link href="/product-list">
+        <PieChartOutlined />
+      </Link>
+    ),
     getItem("Bill", "4"),
     getItem("Alex", "5"),
   ]),
@@ -61,7 +68,7 @@ const items: MenuItem[] = [
     getItem("Order Track", "8"),
   ]),
 
-  getItem("Customer", "2", <DesktopOutlined />),
+  getItem("Customer", "3", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 
@@ -214,7 +221,7 @@ const OrderManage: React.FC = () => {
                     <table id="customers">
                       <thead>
                         <tr>
-                          <th scope="col">Order id</th>
+                          <th scope="col">Order Number</th>
                           <th scope="col">Customer</th>
                           <th scope="col">Phone Number</th>
                           <th scope="col">Email</th>
@@ -228,7 +235,7 @@ const OrderManage: React.FC = () => {
                         {data?.map((order: any, index: any) => {
                           return (
                             <tr key={index}>
-                              <td scope="row">{order?._id}</td>
+                              <td scope="row">{order?.ordernumber}</td>
                               <td>{order?.fullname}</td>
                               <td>{order?.phone}</td>
                               <td>{order?.email}</td>

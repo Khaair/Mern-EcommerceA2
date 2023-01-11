@@ -1,14 +1,17 @@
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "../state-management/actions/productshow";
+import SearchBar from "./searchBar";
 
 function EcomHome({ posts, postsInfo }: any) {
-  const [data, setData] = useState([]);
-  console.log(data, "data is here");
+  const [productData, setProductData] = useState([]);
+  console.log(productData, "productData is here");
   // dispatch post and comments
   useEffect(() => {
     posts();
+    setProductData(postsInfo?.postsData);
   }, [posts]);
   console.log(postsInfo?.postsData, "postsInfo?.postsData hereeeeeee");
 
@@ -26,10 +29,12 @@ function EcomHome({ posts, postsInfo }: any) {
     productId: any;
     price: any;
     title: any;
+    url: any;
   }) => {
     const productId = productDetails.productId;
     const price = productDetails.price;
     const title = productDetails.title;
+    const url = productDetails.url;
 
     // Get the existing cart from local storage
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -37,10 +42,21 @@ function EcomHome({ posts, postsInfo }: any) {
       setItems(cart);
     }
     // Add the new product to the cart
-    cart.push({ productId, price, title });
+    cart.push({ productId, price, title, url });
 
     // Save the updated cart back to local storage
     localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
+  const handlewovelfilter = (category: string) => {
+    const wovelfilter = postsInfo?.postsData?.filter((product: any) => {
+      if (product?.category === category) {
+        return {
+          ...product,
+        };
+      }
+    });
+    setProductData(wovelfilter);
   };
 
   return (
@@ -51,8 +67,12 @@ function EcomHome({ posts, postsInfo }: any) {
             <div className="col-lg-12">
               <div className="banner-content-wrapper">
                 <div className="banner-content-title">
-                  <h2>This site under construction</h2>
-                  <h3>25% Off On All Tops</h3>
+                  <h1>Simple and Easy </h1>
+                  <h1>Shoping with us</h1>
+                  <h1>Extra 10%</h1>
+                  <h1>Savings</h1>
+
+                  <h3 className="mt-2">25% Off On All Tops</h3>
                 </div>
                 <div className="banner-btn-wrapper">
                   <button className="first-banner-btn">Shop Now</button>
@@ -63,6 +83,7 @@ function EcomHome({ posts, postsInfo }: any) {
           </div>
         </div>
       </div>
+
       <div className="e-com-product-show-area e-com-section-padding">
         <div className="container">
           <div className="row">
@@ -122,7 +143,30 @@ function EcomHome({ posts, postsInfo }: any) {
           <div className="row">
             <div className="col-lg-12 text-center">
               <h2>Featured Products</h2>
+
               <span className="featured-product-span" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="filter-area mt-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 text-center">
+              <div className="filter-btn">
+                <button
+                  onClick={() => handlewovelfilter("woven")}
+                  className="btn btn-info"
+                >
+                  Woven
+                </button>
+                <button
+                  onClick={() => handlewovelfilter("knit")}
+                  className="btn btn-info mx-4"
+                >
+                  Knit
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -131,20 +175,23 @@ function EcomHome({ posts, postsInfo }: any) {
         <div className="feature-product-area e-com-section-padding-small">
           <div className="container">
             <div className="row">
-              {postsInfo?.postsData?.map((product: any, index: any) => {
+              {productData?.map((product: any, index: any) => {
                 const productDetails = {
                   productId: product?._id,
                   price: product?.price,
                   title: product?.title,
+                  url: product?.url,
                 };
                 return (
-                  <div key={index} className="col-lg-3">
+                  <div key={index} className="col-lg-3 mt-3">
                     <div className="dgarma-product-show-card">
                       <div className="dgarma-product-show-img text-center">
                         <img src={product?.url} alt="dgarma-product-show-img" />
                       </div>
                       <div className="dgarma-product-show-card-content">
-                        <h3>{product?.title}</h3>
+                        <Link href={`/posts/${product?._id}`}>
+                          <h3>{product?.title}</h3>
+                        </Link>
                         <span>{product?.category}</span>
                         <div className="dgarma-product-show-wrapper">
                           <p>

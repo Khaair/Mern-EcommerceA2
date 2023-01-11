@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, Form, Input } from "antd";
 import {
   DesktopOutlined,
   FileOutlined,
@@ -47,6 +48,13 @@ const items: MenuItem[] = [
         <PieChartOutlined />
       </Link>
     ),
+    getItem(
+      "Product List",
+      "2",
+      <Link href="/product-list">
+        <PieChartOutlined />
+      </Link>
+    ),
     getItem("Bill", "4"),
     getItem("Alex", "5"),
   ]),
@@ -67,17 +75,35 @@ const items: MenuItem[] = [
     getItem("Order Track", "8"),
   ]),
 
-  getItem("Customer", "2", <DesktopOutlined />),
+  getItem("Customer", "3", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
+
 const ProductAdd: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState<any>();
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [url, setUrl] = useState("");
+  const [form] = Form.useForm();
 
   const [notificationMsg, setNotificationMsg] = useState("");
   const [collapsed, setCollapsed] = useState(false);
@@ -91,7 +117,14 @@ const ProductAdd: React.FC = () => {
     });
   };
 
-  const sendDatatoApp = async () => {
+  const onFinish = async (values: any) => {
+    const title = values?.title;
+    const description = values?.description;
+    const price = values?.price;
+    const category = values?.category;
+    const quantity = values?.quantity;
+    const url = values?.url;
+
     try {
       let x = await axios.post("http://localhost:8080/api/product-add", {
         title,
@@ -103,18 +136,16 @@ const ProductAdd: React.FC = () => {
       });
 
       if (x.status === 200) {
-        openNotification();
-        setNotificationMsg(x?.data?.message);
+        console.log(x?.data?.message);
       }
 
       console.log(x.status, "success");
     } catch (er) {
       if (er) {
-        openNotification();
-
-        setNotificationMsg("Please provide correct information");
+        console.log(er);
       }
     }
+    console.log("Received values of form: ", values);
   };
 
   return (
@@ -154,89 +185,100 @@ const ProductAdd: React.FC = () => {
             <div className="product-add-section-area">
               <div className="container">
                 <div className="row">
-                  <div className="col-lg-6">
-                    <div>
-                      <form action="">
-                        <div className="form-group">
-                          <label htmlFor="">Product Title</label>
-                          <input
-                            className="form-control"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            style={{ marginTop: "12px" }}
-                            placeholder="Enter username"
-                            required
-                          />
-                        </div>
-                        <div className="form-group add-product-margin">
-                          <label htmlFor="">Description</label>
-                          <input
-                            className="form-control"
-                            value={description}
-                            style={{ marginTop: "12px" }}
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Enter email"
-                            required
-                          />
-                        </div>
-                        <div className="form-group add-product-margin">
-                          <label htmlFor="">Price</label>
-                          <input
-                            className="form-control"
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            style={{ marginTop: "12px" }}
-                            placeholder="Enter password"
-                            required
-                          />
-                        </div>
-                        <div className="form-group add-product-margin">
-                          <label htmlFor="">Category</label>
-                          <input
-                            className="form-control"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            style={{ marginTop: "12px" }}
-                            placeholder="Enter password"
-                            required
-                          />
-                        </div>
-                        <div className="form-group add-product-margin">
-                          <label htmlFor="">Quantity</label>
-                          <input
-                            className="form-control"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            style={{ marginTop: "12px" }}
-                            placeholder="Enter password"
-                            required
-                          />
-                        </div>
-                        <div className="form-group add-product-margin">
-                          <label htmlFor="">Image link</label>
-                          <input
-                            className="form-control"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                            style={{ marginTop: "12px" }}
-                            placeholder="Enter password"
-                            required
-                          />
-                        </div>
-                        <div className="save-btn-area">
-                          <button
-                            className="btn btn-primary mt-3"
-                            type="button"
-                            onClick={sendDatatoApp}
-                          >
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
+                  <div className="col-lg-8">
+                    <Form
+                      form={form}
+                      name="register"
+                      onFinish={onFinish}
+                      initialValues={{
+                        residence: ["zhejiang", "hangzhou", "xihu"],
+                        prefix: "86",
+                      }}
+                      scrollToFirstError
+                      {...formItemLayout}
+                    >
+                      <Form.Item
+                        name="title"
+                        label="Title"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input title!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="description"
+                        label="Description"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input description!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="price"
+                        label="Price"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input price!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="category"
+                        label="Category"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input category!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="quantity"
+                        label="Quantity"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input quantity!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+
+                      <Form.Item
+                        name="url"
+                        label="Image Link"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input url!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+
+                      <Form.Item {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit">
+                          Product Add
+                        </Button>
+                      </Form.Item>
+                    </Form>
                   </div>
-                  <div className="col-lg-6"></div>
+                  <div className="col-lg-4"></div>
                 </div>
               </div>
             </div>

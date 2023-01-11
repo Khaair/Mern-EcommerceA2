@@ -1,8 +1,6 @@
 import Layout from "../layouts/index";
-
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
-import { arrayBuffer } from "stream/consumers";
 import Link from "next/link";
 
 export default function EcommerceHomePage() {
@@ -27,6 +25,20 @@ export default function EcommerceHomePage() {
   }
 
   const total = calculateTotal(items);
+
+  function deleteFromCart(productId: any) {
+    // Get the current cart from local storage
+    const cart = JSON.parse(localStorage.getItem("cart"));
+
+    // Remove the item with the specified productId from the cart
+    const updatedCart = cart.filter(
+      (item: { productId: any }) => item.productId !== productId
+    );
+
+    // Update the cart in local storage
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setItems(updatedCart);
+  }
 
   return (
     <Layout>
@@ -64,7 +76,7 @@ export default function EcommerceHomePage() {
                               <td className="text-center" scope="row">
                                 <img
                                   className="cart-product-img"
-                                  src="https://cdn.shopify.com/s/files/1/0620/0708/3249/products/shop-9_600x.jpg?v=1643000136"
+                                  src={product?.url}
                                   alt="product image"
                                 />
                               </td>
@@ -79,7 +91,13 @@ export default function EcommerceHomePage() {
                               </td>
                               <td>{product?.price}</td>
                               <td scope="row">
-                                <i className="text-danger fa-thin fa-circle-xmark"></i>
+                                <i
+                                  onClick={() =>
+                                    deleteFromCart(product?.productId)
+                                  }
+                                  className="text-danger fa-thin fa-circle-xmark"
+                                  role="button"
+                                ></i>
                               </td>
                             </tr>
                           );
@@ -128,7 +146,7 @@ export default function EcommerceHomePage() {
                           <hr />
 
                           <div className="mt-3">
-                            <Link href="/billing-address">
+                            <Link href="billing-address">
                               <button className="proceed-to-checkout-btn">
                                 Proceed to Checkout
                               </button>
