@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import SearchBar from "../../pages/searchBar";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [items, setItems] = useState([]);
@@ -12,6 +13,22 @@ export default function Header() {
       setItems(cart);
     }
   }, []);
+
+  const router = useRouter();
+  const handlehomerouter = () => {
+    router.push("/");
+  };
+  const handlecartManagementrouter = () => {
+    router.push("/cart-management");
+  };
+
+  const handleadminrouter = () => {
+    router.push("/admin");
+  };
+
+  const handleLoginrouter = () => {
+    router.push("/login");
+  };
   return (
     <>
       <div className="menubar-area  bg-white  sticky-top navbar-light">
@@ -33,30 +50,31 @@ export default function Header() {
             <div className="col-lg-4">
               <div className="menubar-content">
                 <ul>
-                  <li> </li>
-                  <Link href="/">
-                    <li>Home</li>
-                  </Link>
+                  <li role="button" onClick={handlehomerouter}>
+                    Home
+                  </li>
 
                   <Link href="/profile">
                     <li role="button">Profile</li>
                   </Link>
-                  <Link href="admin">
-                    <li>Admin</li>
-                  </Link>
-                  <Link href="/cart-management">
-                    <li>
-                      <div className="cart-icon-wrapper">
-                        <div>
-                          {" "}
-                          <ShoppingCartOutlined />
-                        </div>
-                        <div>
-                          <p>{items.length}</p>
-                        </div>
+                  <li role="button" onClick={handleadminrouter}>
+                    Admin
+                  </li>
+
+                  <li role="button" onClick={handleLoginrouter}>
+                    Log in
+                  </li>
+
+                  <li role="button" onClick={handlecartManagementrouter}>
+                    <div className="cart-icon-wrapper">
+                      <div>
+                        <ShoppingCartOutlined />
                       </div>
-                    </li>
-                  </Link>
+                      <div>
+                        <p>{items.length}</p>
+                      </div>
+                    </div>
+                  </li>
                 </ul>
               </div>
             </div>

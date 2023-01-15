@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Col, Row, notification } from "antd";
+import Layout from "../layouts";
+import Signup from "./signup";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -43,61 +45,60 @@ function Login() {
   };
 
   return (
-    <div className="login-area mt-5 ">
+    <Layout>
       <Row>
-        <Col span={4}></Col>
-        <Col span={16}>
-          <div className="container">
-            <div className="card">
-              <form action="">
-                <div className="form-group mt-3">
-                  <label htmlFor="">Enter User Name</label>
-                  <input
-                    className="form-control w-50"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter username"
-                    required
-                  />
-                </div>
+        <Col span={24}>
+          <div className="login-area mt-5">
+            <div className="container">
+              <div className="card">
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div>
+                      <h4>Login here</h4>
+                    </div>
+                    <form action="">
+                      <div className="form-group mt-3">
+                        <label htmlFor="">Enter User Name</label>
+                        <input
+                          className="form-control"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          placeholder="Enter username"
+                          required
+                        />
+                      </div>
 
-                <div className="form-group">
-                  <label htmlFor="">Enter Password</label>
-                  <input
-                    className="form-control w-50"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter password"
-                    required
-                  />
+                      <div className="form-group">
+                        <label htmlFor="">Enter Password</label>
+                        <input
+                          className="form-control"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="Enter password"
+                          required
+                        />
+                      </div>
+                      <div className="save-btn-area">
+                        <button
+                          className="btn btn-primary mt-3"
+                          type="button"
+                          onClick={sendDatatoApp}
+                        >
+                          Login{" "}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div className="col-lg-6">
+                    <Signup />
+                  </div>
                 </div>
-                <div className="save-btn-area">
-                  <button
-                    className="btn btn-primary mt-3"
-                    type="button"
-                    onClick={sendDatatoApp}
-                  >
-                    Login{" "}
-                  </button>
-                  <Link href="/signup">
-                    <button
-                      className="btn btn-primary mt-3 mx-2"
-                      type="button"
-                      onClick={sendDatatoApp}
-                    >
-                      Sign Up{" "}
-                    </button>
-                  </Link>
-                </div>
-              </form>
+              </div>
             </div>
           </div>
         </Col>
-        <Col span={4}></Col>
       </Row>
-    </div>
+    </Layout>
   );
 }
 

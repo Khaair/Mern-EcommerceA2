@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { fetchComments } from "../../state-management/actions/comments";
 import { fetchUsers } from "../../state-management/actions/users";
 import ReactImageMagnify from "react-image-magnify";
-
+import StarRatings from "react-star-ratings";
 import { fetchPosts } from "../../state-management/actions/productshow";
 
 import Link from "next/link";
@@ -28,15 +28,51 @@ function Details({
   const [getPost, setPosts] = useState();
   const [comment, setComment] = useState<string>("");
   const [items, setItems] = useState([]);
+  const [rating, setRating] = useState(5);
+  const [getfetchRatingdata, setGetfetchRatingdata] = useState();
+  const [singleProductTotalRating, setsingleProductTotalRating] = useState([]);
+  const [finalavaragevalue, setFinalavaragevalue] = useState();
+  const [fiveRating, setFiveRating] = useState([]);
+  const [fourRating, setFourRating] = useState([]);
+  const [threeRating, setThreeRating] = useState([]);
+  const [twoRating, setTwoRating] = useState([]);
+  const [oneRating, setOneRating] = useState([]);
+  // const [totalratinglen, setTotalratinglen] = useState();
 
-  console.log(commentInfo?.commentData, "commentInfo success new");
-  console.log(getPost, "getPost");
+  // if (oneRating && twoRating) {
+  //   setTotalratinglen(
+  //     oneRating?.length +
+  //       twoRating?.length +
+  //       threeRating?.length +
+  //       fourRating?.length +
+  //       fiveRating?.length
+  //   );
+  // }
 
-  // dispatch post and comments
+  console.log(getfetchRatingdata, "getfetchRatingdata");
+  console.log(finalavaragevalue, "finalavaragevalue");
+
+  function calculateTotal() {
+    let total = 0;
+
+    for (let i = 0; i <= singleProductTotalRating?.length - 1; i++) {
+      total += singleProductTotalRating[i]?.ratingValue;
+    }
+
+    return total;
+  }
+
   useEffect(() => {
-    posts();
-    comments();
-  }, [posts, comments]);
+    let finalaavagragevalue: any = calculateTotal();
+    setFinalavaragevalue(finalaavagragevalue / 5);
+  }, [singleProductTotalRating]);
+
+  let totalt =
+    // dispatch post and comments
+    useEffect(() => {
+      posts();
+      comments();
+    }, [posts, comments]);
 
   useEffect(() => {
     const posts = postsInfo?.postsData?.map((post: any) => {
@@ -63,6 +99,7 @@ function Details({
   }, [commentInfo?.commentData, id, postsInfo?.postsData, userInfo?.usersData]);
 
   const userNamee = JSON.parse(localStorage.getItem("userName") as string);
+  const storedUserId = JSON.parse(localStorage.getItem("userId") as string);
 
   const sendDatatoApp = async () => {
     const userId = userNamee;
@@ -112,13 +149,115 @@ function Details({
     title: singlePostInfo?.title,
     url: singlePostInfo?.url,
   };
+
+  const changeRating = (newRating: React.SetStateAction<number>) => {
+    setRating(newRating);
+  };
+
+  const sendRatingtoApp = async (productId: any) => {
+    try {
+      let x = await axios.post("http://localhost:8080/api/product-rating-add", {
+        userId: storedUserId,
+        productId,
+        ratingValue: rating,
+      });
+
+      if (x.status === 200) {
+        fetchRatingdata();
+        console.log(x.status, "success");
+      }
+
+      console.log(x.status, "success");
+    } catch (er) {
+      if (er) {
+        console.log(er, "success");
+      }
+    }
+  };
+
+  const fetchRatingdata = async () => {
+    try {
+      const datahere = await axios.get(
+        "http://localhost:8080/api/product-rating-show"
+      );
+      setGetfetchRatingdata(datahere.data);
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchRatingdata();
+  }, []);
+
+  useEffect(() => {
+    const productTotalRating = getfetchRatingdata?.filter((rating: any) => {
+      if (rating?.productId === id) {
+        return {
+          ...rating,
+        };
+      }
+    });
+    setsingleProductTotalRating(productTotalRating);
+  }, [getfetchRatingdata, id]);
+
+  useEffect(() => {
+    const fiveRatingg = singleProductTotalRating?.filter((rating: any) => {
+      if (rating?.ratingValue === 5) {
+        return {
+          ...rating,
+        };
+      }
+    });
+    setFiveRating(fiveRatingg);
+
+    const fourRatingg = singleProductTotalRating?.filter((rating: any) => {
+      if (rating?.ratingValue === 4) {
+        return {
+          ...rating,
+        };
+      }
+    });
+    setFourRating(fourRatingg);
+
+    const threeRatingg = singleProductTotalRating?.filter((rating: any) => {
+      if (rating?.ratingValue === 3) {
+        return {
+          ...rating,
+        };
+      }
+    });
+    setThreeRating(threeRatingg);
+
+    const twoRatingg = singleProductTotalRating?.filter((rating: any) => {
+      if (rating?.ratingValue === 2) {
+        return {
+          ...rating,
+        };
+      }
+    });
+    setTwoRating(twoRatingg);
+
+    const oneRatingg = singleProductTotalRating?.filter((rating: any) => {
+      if (rating?.ratingValue === 1) {
+        return {
+          ...rating,
+        };
+      }
+    });
+    setOneRating(oneRatingg);
+  }, [getfetchRatingdata]);
+
   return (
     <Layout>
       <div className="details-page-area">
         <div className="container">
+          <pre>
+            <code>{JSON.stringify(fiveRating, null, 4)}</code>
+          </pre>
           <Row>
             <Col span={24}>
-              <div className="details-page-left-side-wrapper">
+              <div className="details-page-top-card-wrapper">
                 <div className="container">
                   <div className="row">
                     <div className="col-lg-6">
@@ -145,11 +284,20 @@ function Details({
                           } as any)}
                         />
                       </div>
-                      {/* <img src={singlePostInfo?.url} alt="" /> */}
                     </div>
                     <div className="col-lg-6">
                       <div className="post-details">
                         <h3>{singlePostInfo?.title}</h3>
+
+                        <div>
+                          <StarRatings
+                            rating={finalavaragevalue}
+                            starRatedColor="orange"
+                            numberOfStars={5}
+                            name="rating"
+                            starDimension="20px"
+                          />
+                        </div>
 
                         <h3 className="text-danger mt-2">
                           ৳ {singlePostInfo?.price}
@@ -165,6 +313,7 @@ function Details({
                             Catagory: {singlePostInfo?.category}
                           </h6>
                         </div>
+
                         <div className="mt-3">
                           <Link href="/billing-address">
                             <button
@@ -190,6 +339,95 @@ function Details({
           </Row>
           <Row>
             <Col span={18}>
+              <div className="details-page-first-left-side-wrapper">
+                <div className="row">
+                  <div className="col-lg-4">
+                    <h3>Avarage rating here:</h3>
+                    <div>
+                      <StarRatings
+                        rating={finalavaragevalue}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                      />
+                    </div>
+
+                    <p>{singleProductTotalRating?.length} Ratings</p>
+                  </div>
+                  <div className="col-lg-4">
+                    <div className="specfice-rating-star">
+                      <StarRatings
+                        rating={5}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                      />
+                      <b className="mx-2 mt-1">{fiveRating?.length}</b>
+                    </div>
+                    <div className="specfice-rating-star">
+                      <StarRatings
+                        rating={4}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                      />
+                      <b className="mx-2 mt-1">{fourRating?.length}</b>
+                    </div>
+                    <div className="specfice-rating-star">
+                      <StarRatings
+                        rating={3}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                      />
+                      <b className="mx-2 mt-1">{threeRating?.length}</b>
+                    </div>
+                    <div className="specfice-rating-star">
+                      <StarRatings
+                        rating={2}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                      />
+                      <b className="mx-2 mt-1">{twoRating?.length}</b>
+                    </div>
+                    <div>
+                      <StarRatings
+                        rating={1}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                      />
+                      <b className="mx-2 mt-2">{oneRating?.length}</b>
+                    </div>
+                  </div>
+                  <div className="col-lg-4">
+                    <div>
+                      <StarRatings
+                        rating={rating}
+                        starRatedColor="orange"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="20px"
+                        changeRating={changeRating}
+                      />
+                    </div>
+
+                    <button
+                      onClick={() => sendRatingtoApp(singlePostInfo?._id)}
+                      className="btn btn-primary mt-2"
+                    >
+                      Rating Add
+                    </button>
+                  </div>
+                </div>
+              </div>
               <div className="details-page-left-side-wrapper">
                 <form action="/action_page.php">
                   <div className="mb-3 mt-3">
@@ -198,7 +436,7 @@ function Details({
                       className="form-control"
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      style={{ margin: "12px" }}
+                      style={{ marginTop: "12px" }}
                       placeholder="Enter Description"
                     />
                   </div>
@@ -224,25 +462,31 @@ function Details({
                     );
                   })}
                 </div>
-              </div>
-              {getPost?.slice(0, 1)?.map((item: any, index: any) => {
-                return (
-                  <div key={item?._id}>
-                    {item?.comments?.map((inneritem: any, index: any) => {
-                      return (
-                        <div key={index}>
-                          <h5>{inneritem?.userId}</h5>
-                          <div>
-                            <p>{inneritem?.comment}</p>
+                {getPost?.slice(0, 1)?.map((item: any, index: any) => {
+                  return (
+                    <div key={item?._id}>
+                      {item?.comments?.map((inneritem: any, index: any) => {
+                        return (
+                          <div className="mt-5" key={index}>
+                            <div className="single-product-comment-show-wrapper">
+                              <img
+                                src="https://secure.gravatar.com/avatar/8b8d6f209e2d1b976a7d0491ddf46150?s=60&d=mm&r=g"
+                                alt=""
+                              />
+                              <div className="mx-3">
+                                <h5>{inneritem?.userId}</h5>
+                                <p>{inneritem?.comment}</p>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
 
-                    <p>{item?.comment}</p>
-                  </div>
-                );
-              })}
+                      <p>{item?.comment}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </Col>
             <Col span={6}>
               <div className="details-page-right-side-wrapper">
@@ -290,3 +534,6 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Details);
+function calculateTotal(singleProductTotalRating: undefined) {
+  throw new Error("Function not implemented.");
+}

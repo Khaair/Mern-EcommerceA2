@@ -311,59 +311,67 @@ const ProductList: React.FC = ({ posts, postsInfo }: any) => {
               </div>
             </div>
             <Modal
-              title="Basic Modal"
+              title="Update Product Details"
               open={isModalOpen}
               onOk={handleOk}
               onCancel={handleCancel}
               width={1000}
             >
-              <h3 className="mb-2">Customer Details</h3>
               <div className="container">
                 <div className="row ">
-                  <div className="col-md-12 justify-content-center text-center"></div>
-                  <input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter title"
-                  />
-                  <input
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter author"
-                  />
-                  <input
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter body"
-                  />
-                  <input
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter body"
-                  />
-                  <input
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter body"
-                  />
-                  <input
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    style={{ margin: "12px" }}
-                    placeholder="Enter body"
-                  />
-                  <button
-                    type="button"
-                    onClick={upDate}
-                    style={{ width: "80px" }}
-                  >
-                    update
-                  </button>
+                  <div className="col-md-12 deshboard-product-update">
+                    <label>Title</label>
+                    <input
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="title"
+                    />
+                    <label>Description</label>
+
+                    <input
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="description"
+                    />
+                    <label>Price</label>
+
+                    <input
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                      placeholder="price"
+                    />
+                    <label>Category</label>
+
+                    <input
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      placeholder="category"
+                    />
+                    <label>Quantity</label>
+
+                    <input
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                      placeholder="quantity"
+                    />
+                    <label>Image Link</label>
+
+                    <input
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                      placeholder="image link"
+                    />
+                  </div>
+
+                  <div>
+                    <button
+                      className="btn btn-info text-light mt-3"
+                      type="button"
+                      onClick={upDate}
+                    >
+                      update
+                    </button>
+                  </div>
                 </div>
               </div>
             </Modal>
