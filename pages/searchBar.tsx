@@ -20,8 +20,6 @@ function SearchBar({
   const [wordEntered, setWordEntered] = useState("");
   const [grettingsMsg, setGrettingsMsg] = useState<string>("");
 
-  console.log(filteredData, "search");
-
   // dispatch post and comments
   useEffect(() => {
     posts();
@@ -50,8 +48,6 @@ function SearchBar({
   useEffect(() => {
     var today = new Date();
     var curHr = today.getHours();
-
-    console.log(curHr, "getHours");
 
     if (curHr < 12) {
       setGrettingsMsg("শুভ সকাল! 👋");

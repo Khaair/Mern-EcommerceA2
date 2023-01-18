@@ -52,7 +52,7 @@ function Signup({ signups, signupsInfo }: any) {
               <div className="form-group mt-3">
                 <label htmlFor="">Enter User Name</label>
                 <input
-                  className="form-control"
+                  className="form-control mt-2"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter username"
@@ -60,9 +60,11 @@ function Signup({ signups, signupsInfo }: any) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Enter Email</label>
+                <label className="mt-2" htmlFor="">
+                  Enter Email
+                </label>
                 <input
-                  className="form-control"
+                  className="form-control mt-2"
                   value={email}
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
@@ -71,9 +73,11 @@ function Signup({ signups, signupsInfo }: any) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Enter Password</label>
+                <label className="mt-2" htmlFor="">
+                  Enter Password
+                </label>
                 <input
-                  className="form-control"
+                  className="form-control mt-2"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"

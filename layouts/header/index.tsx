@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import SearchBar from "../../pages/searchBar";
 import { useRouter } from "next/router";
+import { Avatar } from "antd";
 
 export default function Header() {
   const [items, setItems] = useState([]);
@@ -57,9 +58,6 @@ export default function Header() {
                   <Link href="/profile">
                     <li role="button">Profile</li>
                   </Link>
-                  <li role="button" onClick={handleadminrouter}>
-                    Admin
-                  </li>
 
                   <li role="button" onClick={handleLoginrouter}>
                     Log in
@@ -74,6 +72,9 @@ export default function Header() {
                         <p>{items.length}</p>
                       </div>
                     </div>
+                  </li>
+                  <li role="button" onClick={handleadminrouter}>
+                    <Avatar size={30} icon={<UserOutlined />} />
                   </li>
                 </ul>
               </div>

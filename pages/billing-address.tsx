@@ -2,6 +2,7 @@ import { notification } from "antd";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { BallTriangle } from "react-loader-spinner";
 import Layout from "../layouts/index";
 
 export default function BillingAddress() {
@@ -72,11 +73,11 @@ export default function BillingAddress() {
         );
 
         if (x.status === 200) {
-          openNotification();
           setErrormsg("");
 
-          setNotificationMsg(x?.data?.message);
+          setNotificationMsg("Order Received Successfully");
           router.push("/checkout");
+          openNotification();
         }
 
         console.log(x.status, "success");

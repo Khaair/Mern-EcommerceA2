@@ -1095,9 +1095,7 @@ color: aliceblue;
     margin-bottom: 50px;
 }
 
-.feature-all-product-wrapper{
-    margin-top: 65px;
-}
+
 
 .footer-item-wrapper ul li img{
     width: 115px;
@@ -1291,7 +1289,7 @@ input[type=submit]:hover {
   background-color: #FFFFFF;
   margin-top: 20px;
   width: 100%;
-  min-height: 100vh;
+  min-height: 84vh;
   border-radius: 5px;
   padding: 20px 20px;
   margin-bottom: 20px;
@@ -1300,3 +1298,120 @@ input[type=submit]:hover {
 .specfice-rating-star{
   display: flex;
 }
+
+.checkout-area{
+background-color:   #F5F5F5;
+}
+
+.deshboard-header-wrapper{
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  height: 70px;
+  padding: 20px;
+}
+
+.ecommerce-loader-wrapper{
+  display: flex;
+  justify-content: center;
+  height: 800px;
+  padding-top: 300px;
+}
+
+
+/* 
+product-order-info-area */
+
+.card-product-order-info{
+    background-color: white;
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 5px;
+    padding: 20px 20px;
+    margin-bottom: 20px;
+}
+.product-order-info-content-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.card-product-rating-info{
+  background-color: white;
+  margin-top: 20px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 20px 20px;
+  margin-bottom: 20px;
+}
+.product-rating-imgg-wrapper{
+  display: flex;
+}
+
+.product-tracking-info-show{
+  padding: 70px 0px 40px 0px;
+  display: grid;
+  justify-content: center;
+}
+
+.card-product-rating-top-content-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  max-width: 100vw;
+  position: relative;
+  width: 35rem;
+  background-color: #4CAF50;
+  height: 8px;
+  border-radius: 10px;
+
+}
+.progress-text-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100vw;
+  width: 36rem;
+  height: 8px;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+
+}
+
+.circle {
+  align-items: center;
+  background-color: #4CAF50;
+  border: 3px solid var(--disabled-line-border);
+  border-radius: 50%;
+  color: var(--text-color);
+  display: flex;
+  height: 25px;
+  justify-content: center;
+  transition: 0.4s ease;
+  width: 25px;
+  margin-top: -9px;
+
+}
+
+
+
+/* .product-rating-info-table  td {
+  padding-right: 100px;
+} */
+.product-rating-info-img-wrapper{
+  display: flex;
+}
+
+
+.product-rating-info-table tr td img{
+  height: 80px;
+}
+
+.product-rating-info-table tr td{
+  vertical-align: top !important;
+  padding-right: 50px;
+}
+

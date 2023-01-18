@@ -1,15 +1,5 @@
 import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Card,
-  Col,
-  message,
-  Modal,
-  Row,
-  Upload,
-  UploadProps,
-} from "antd";
+import { Col, message, Modal, Row, Upload, UploadProps } from "antd";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -300,10 +290,7 @@ function Profile({
           <div className="container">
             <div className="row">
               <div className="col-lg-8">
-                <div className="profile-picture-area d-flex">
-                  <div>
-                    <img src={SinglePhotoInfo?.at(-1)?.url} />
-                  </div>
+                <div className="profile-picture-area">
                   <div>
                     <Upload
                       name="avatar"

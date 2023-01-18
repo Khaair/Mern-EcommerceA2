@@ -3,10 +3,17 @@ import { Button, Form, Input, Modal } from "antd";
 import { fetchPosts } from ".././../state-management/actions/productshow";
 
 import {
+  AppstoreOutlined,
+  BankOutlined,
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  PlusCircleOutlined,
+  PlusSquareOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
   TeamOutlined,
+  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { MenuProps, notification } from "antd";
@@ -33,7 +40,6 @@ function getItem(
     label,
   } as MenuItem;
 }
-
 const items: MenuItem[] = [
   getItem(
     "Deshboard",
@@ -43,31 +49,32 @@ const items: MenuItem[] = [
       <PieChartOutlined />
     </Link>
   ),
-  getItem("Product", "sub1", <UserOutlined />, [
+  getItem("Product", "sub1", <ShoppingCartOutlined />, [
     getItem(
-      "Product Add",
+      "Add Product",
       "1",
       <Link href="/product-add">
-        <PieChartOutlined />
+        <PlusCircleOutlined />
+      </Link>
+    ),
+
+    getItem(
+      "Add Category",
+      "3",
+      <Link href="/category-add">
+        <PlusCircleOutlined />
       </Link>
     ),
     getItem(
       "Product List",
       "2",
-      <Link href="/product-add">
-        <PieChartOutlined />
+      <Link href="/product-list">
+        <UnorderedListOutlined />
       </Link>
     ),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
   ]),
 
-  getItem("User", "sub2", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Order", "sub3", <TeamOutlined />, [
+  getItem("Order", "sub3", <ShoppingOutlined />, [
     getItem(
       "Order Manage",
       "6",
@@ -78,7 +85,13 @@ const items: MenuItem[] = [
     getItem("Order Track", "8"),
   ]),
 
-  getItem("Customer", "3", <DesktopOutlined />),
+  getItem("User", "sub2", <UserOutlined />, [
+    getItem("Tom", "3"),
+    getItem("Bill", "4"),
+    getItem("Alex", "5"),
+  ]),
+
+  getItem("Customer", "4", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 

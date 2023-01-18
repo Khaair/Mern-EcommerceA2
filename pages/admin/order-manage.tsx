@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
+  AppstoreOutlined,
+  BankOutlined,
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  PlusCircleOutlined,
+  PlusSquareOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
   TeamOutlined,
+  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Button, MenuProps, Modal } from "antd";
@@ -39,23 +46,40 @@ const items: MenuItem[] = [
       <PieChartOutlined />
     </Link>
   ),
-  getItem("Product", "sub1", <UserOutlined />, [
+  getItem("Product", "sub1", <ShoppingCartOutlined />, [
     getItem(
-      "Product Add",
+      "Add Product",
       "1",
       <Link href="/product-add">
-        <PieChartOutlined />
+        <PlusCircleOutlined />
+      </Link>
+    ),
+
+    getItem(
+      "Add Category",
+      "3",
+      <Link href="/category-add">
+        <PlusCircleOutlined />
       </Link>
     ),
     getItem(
       "Product List",
       "2",
       <Link href="/product-list">
+        <UnorderedListOutlined />
+      </Link>
+    ),
+  ]),
+
+  getItem("Order", "sub3", <ShoppingOutlined />, [
+    getItem(
+      "Order Manage",
+      "6",
+      <Link href="/order-manage">
         <PieChartOutlined />
       </Link>
     ),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
+    getItem("Order Track", "8"),
   ]),
 
   getItem("User", "sub2", <UserOutlined />, [
@@ -63,15 +87,10 @@ const items: MenuItem[] = [
     getItem("Bill", "4"),
     getItem("Alex", "5"),
   ]),
-  getItem("Order", "sub3", <TeamOutlined />, [
-    getItem("Order Manage", "6"),
-    getItem("Order Track", "8"),
-  ]),
 
-  getItem("Customer", "3", <DesktopOutlined />),
+  getItem("Customer", "4", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
-
 const OrderManage: React.FC = () => {
   const [data, setData] = useState([]);
   const [singledata, setSingledata] = useState([]);

@@ -3,17 +3,19 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "../state-management/actions/productshow";
-import SearchBar from "./searchBar";
+import { Bars } from "react-loader-spinner";
 
 function EcomHome({ posts, postsInfo }: any) {
   const [productData, setProductData] = useState([]);
-  console.log(productData, "productData is here");
+  const [categoryData, setCategoryData] = useState([]);
+
+  console.log(categoryData, "categoryData");
+
   // dispatch post and comments
   useEffect(() => {
     posts();
     setProductData(postsInfo?.postsData);
   }, [posts]);
-  console.log(postsInfo?.postsData, "postsInfo?.postsData hereeeeeee");
 
   const [items, setItems] = useState([]);
 
@@ -59,160 +61,193 @@ function EcomHome({ posts, postsInfo }: any) {
     setProductData(wovelfilter);
   };
 
+  const fetchdata = async () => {
+    try {
+      const datahere = await axios.get(
+        "http://localhost:8080/api/product-category-show"
+      );
+      setCategoryData(datahere.data);
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
   return (
     <>
-      <div className="navbar-and-banner-area">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="banner-content-wrapper">
-                <div className="banner-content-title">
-                  <h1>Simple and Easy </h1>
-                  <h1>Shoping with us</h1>
-                  <h1>Extra 10%</h1>
-                  <h1>Savings</h1>
+      {postsInfo?.loading ? (
+        <div className="ecommerce-loader-wrapper">
+          <Bars
+            height="100"
+            width="100"
+            color="#4fa94d"
+            ariaLabel="bars-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      ) : (
+        <div>
+          <div className="navbar-and-banner-area">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="banner-content-wrapper">
+                    <div className="banner-content-title">
+                      <h1>Simple and Easy </h1>
+                      <h1>Shoping with us</h1>
+                      <h1>Extra 10%</h1>
+                      <h1>Savings</h1>
 
-                  <h3 className="mt-2">25% Off On All Tops</h3>
-                </div>
-                <div className="banner-btn-wrapper">
-                  <button className="first-banner-btn">Shop Now</button>
-                  <button>Find More</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="e-com-product-show-area e-com-section-padding">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3">
-              <div
-                style={{ backgroundImage: 'url("/img/prod-01.jpg")' }}
-                className="product-card-area"
-              >
-                <h2>20% Off On Tank Tops</h2>
-                <p>Lorem ipsum dolor sit amet consec tetur.</p>
-                <div className="product-card-btn-wrapper">
-                  <button>Shop Now</button>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div
-                style={{ backgroundImage: 'url("/img/prod-02.jpg")' }}
-                className="product-card-area"
-              >
-                <h2>20% Off On Tank Tops</h2>
-                <p>Lorem ipsum dolor sit amet consec tetur.</p>
-                <div className="product-card-btn-wrapper">
-                  <button>Shop Now</button>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div
-                style={{ backgroundImage: 'url("/img/prod-03.jpg")' }}
-                className="product-card-area"
-              >
-                <h2>20% Off On Tank Tops</h2>
-                <p>Lorem ipsum dolor sit amet consec tetur.</p>
-                <div className="product-card-btn-wrapper">
-                  <button>Shop Now</button>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div
-                style={{ backgroundImage: 'url("/img/prod-04.jpg")' }}
-                className="product-card-area"
-              >
-                <h2>20% Off On Tank Tops</h2>
-                <p>Lorem ipsum dolor sit amet consec tetur.</p>
-                <div className="product-card-btn-wrapper">
-                  <button>Shop Now</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="feature-product-title-area">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <h2>Featured Products</h2>
-
-              <span className="featured-product-span" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="filter-area mt-5">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <div className="filter-btn">
-                <button
-                  onClick={() => handlewovelfilter("woven")}
-                  className="btn btn-info"
-                >
-                  Woven
-                </button>
-                <button
-                  onClick={() => handlewovelfilter("knit")}
-                  className="btn btn-info mx-4"
-                >
-                  Knit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="feature-all-product-wrapper ">
-        <div className="feature-product-area e-com-section-padding-small">
-          <div className="container">
-            <div className="row">
-              {productData?.map((product: any, index: any) => {
-                const productDetails = {
-                  productId: product?._id,
-                  price: product?.price,
-                  title: product?.title,
-                  url: product?.url,
-                };
-                return (
-                  <div key={index} className="col-lg-3 mt-3">
-                    <div className="dgarma-product-show-card">
-                      <div className="dgarma-product-show-img text-center">
-                        <img src={product?.url} alt="dgarma-product-show-img" />
-                      </div>
-                      <div className="dgarma-product-show-card-content">
-                        <Link href={`/posts/${product?._id}`}>
-                          <h3>{product?.title}</h3>
-                        </Link>
-                        <span>{product?.category}</span>
-                        <div className="dgarma-product-show-wrapper">
-                          <p>
-                            <span>Price:</span>৳ {product?.price}
-                          </p>
-                          <button
-                            onClick={() => addToCart(productDetails)}
-                            type="button"
-                          >
-                            Add to cart
-                          </button>
-                        </div>
-                      </div>
+                      <h3 className="mt-2">25% Off On All Tops</h3>
+                    </div>
+                    <div className="banner-btn-wrapper">
+                      <button className="first-banner-btn">Shop Now</button>
+                      <button>Find More</button>
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="e-com-product-show-area e-com-section-padding">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3">
+                  <div
+                    style={{ backgroundImage: 'url("/img/prod-01.jpg")' }}
+                    className="product-card-area"
+                  >
+                    <h2>20% Off On Tank Tops</h2>
+                    <p>Lorem ipsum dolor sit amet consec tetur.</p>
+                    <div className="product-card-btn-wrapper">
+                      <button>Shop Now</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-3">
+                  <div
+                    style={{ backgroundImage: 'url("/img/prod-02.jpg")' }}
+                    className="product-card-area"
+                  >
+                    <h2>20% Off On Tank Tops</h2>
+                    <p>Lorem ipsum dolor sit amet consec tetur.</p>
+                    <div className="product-card-btn-wrapper">
+                      <button>Shop Now</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-3">
+                  <div
+                    style={{ backgroundImage: 'url("/img/prod-03.jpg")' }}
+                    className="product-card-area"
+                  >
+                    <h2>20% Off On Tank Tops</h2>
+                    <p>Lorem ipsum dolor sit amet consec tetur.</p>
+                    <div className="product-card-btn-wrapper">
+                      <button>Shop Now</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-3">
+                  <div
+                    style={{ backgroundImage: 'url("/img/prod-04.jpg")' }}
+                    className="product-card-area"
+                  >
+                    <h2>20% Off On Tank Tops</h2>
+                    <p>Lorem ipsum dolor sit amet consec tetur.</p>
+                    <div className="product-card-btn-wrapper">
+                      <button>Shop Now</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="feature-product-title-area">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12 text-center">
+                  <h2>Featured Products</h2>
+
+                  <span className="featured-product-span" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="filter-area mt-5">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12 text-center">
+                  <div className="filter-btn">
+                    {categoryData?.map((item, index) => {
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => handlewovelfilter(item?.category)}
+                          className="btn btn-info mx-2 mb-3"
+                        >
+                          {item?.category}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="feature-all-product-wrapper ">
+            <div className="feature-product-area e-com-section-padding-small">
+              <div className="container">
+                <div className="row">
+                  {productData?.map((product: any, index: any) => {
+                    const productDetails = {
+                      productId: product?._id,
+                      price: product?.price,
+                      title: product?.title,
+                      url: product?.url,
+                    };
+                    return (
+                      <div key={index} className="col-lg-3 mt-3">
+                        <div className="dgarma-product-show-card">
+                          <div className="dgarma-product-show-img text-center">
+                            <img
+                              src={product?.url}
+                              alt="dgarma-product-show-img"
+                            />
+                          </div>
+                          <div className="dgarma-product-show-card-content">
+                            <Link href={`/posts/${product?._id}`}>
+                              <h3>{product?.title}</h3>
+                            </Link>
+                            <span>{product?.category}</span>
+                            <div className="dgarma-product-show-wrapper">
+                              <p>
+                                <span>Price:</span>৳ {product?.price}
+                              </p>
+                              <button
+                                onClick={() => addToCart(productDetails)}
+                                type="button"
+                              >
+                                Add to cart
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

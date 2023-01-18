@@ -1,6 +1,6 @@
 import { Col, Image, Row } from "antd";
 import router, { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../layouts/index";
 import { connect } from "react-redux";
 import { fetchComments } from "../../state-management/actions/comments";
@@ -8,9 +8,7 @@ import { fetchUsers } from "../../state-management/actions/users";
 import ReactImageMagnify from "react-image-magnify";
 import StarRatings from "react-star-ratings";
 import { fetchPosts } from "../../state-management/actions/productshow";
-
 import Link from "next/link";
-import { log } from "console";
 import axios from "axios";
 function Details({
   posts,
@@ -37,35 +35,40 @@ function Details({
   const [threeRating, setThreeRating] = useState([]);
   const [twoRating, setTwoRating] = useState([]);
   const [oneRating, setOneRating] = useState([]);
-  // const [totalratinglen, setTotalratinglen] = useState();
-
-  // if (oneRating && twoRating) {
-  //   setTotalratinglen(
-  //     oneRating?.length +
-  //       twoRating?.length +
-  //       threeRating?.length +
-  //       fourRating?.length +
-  //       fiveRating?.length
-  //   );
-  // }
+  const [totallength, setTotallength] = useState<number>(0);
 
   console.log(getfetchRatingdata, "getfetchRatingdata");
   console.log(finalavaragevalue, "finalavaragevalue");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    setTotallength(
+      oneRating?.length * 1 +
+        twoRating?.length * 2 +
+        threeRating?.length * 3 +
+        fourRating?.length * 4 +
+        fiveRating?.length * 5
+    );
+  }, [
+    fiveRating?.length,
+    fourRating?.length,
+    oneRating?.length,
+    threeRating?.length,
+    twoRating?.length,
+  ]);
 
-  function calculateTotal() {
+  const calculateTotal = useCallback(() => {
     let total = 0;
-
     for (let i = 0; i <= singleProductTotalRating?.length - 1; i++) {
       total += singleProductTotalRating[i]?.ratingValue;
     }
 
     return total;
-  }
-
+  }, [singleProductTotalRating]);
   useEffect(() => {
     let finalaavagragevalue: any = calculateTotal();
-    setFinalavaragevalue(finalaavagragevalue / 5);
-  }, [singleProductTotalRating]);
+    console.log(finalaavagragevalue, "finalaavagragevalue hiii");
+    setFinalavaragevalue((finalaavagragevalue / 5) as any);
+  }, [calculateTotal, singleProductTotalRating]);
 
   let totalt =
     // dispatch post and comments
@@ -246,15 +249,12 @@ function Details({
       }
     });
     setOneRating(oneRatingg);
-  }, [getfetchRatingdata]);
+  }, [getfetchRatingdata, singleProductTotalRating]);
 
   return (
     <Layout>
       <div className="details-page-area">
         <div className="container">
-          <pre>
-            <code>{JSON.stringify(fiveRating, null, 4)}</code>
-          </pre>
           <Row>
             <Col span={24}>
               <div className="details-page-top-card-wrapper">
@@ -421,7 +421,7 @@ function Details({
 
                     <button
                       onClick={() => sendRatingtoApp(singlePostInfo?._id)}
-                      className="btn btn-primary mt-2"
+                      className="btn btn-primary mt-4"
                     >
                       Rating Add
                     </button>
@@ -474,7 +474,7 @@ function Details({
                                 alt=""
                               />
                               <div className="mx-3">
-                                <h5>{inneritem?.userId}</h5>
+                                <h6>{inneritem?.userId}</h6>
                                 <p>{inneritem?.comment}</p>
                               </div>
                             </div>

@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import {
+  AppstoreOutlined,
+  BankOutlined,
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  PlusCircleOutlined,
+  PlusSquareOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
   TeamOutlined,
+  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Card, MenuProps } from "antd";
+import { Avatar, Card, MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import ProductAdd from "./product-add";
 import Link from "next/link";
@@ -38,31 +45,32 @@ const items: MenuItem[] = [
       <PieChartOutlined />
     </Link>
   ),
-  getItem("Product", "sub1", <UserOutlined />, [
+  getItem("Product", "sub1", <ShoppingCartOutlined />, [
     getItem(
-      "Product Add",
+      "Add Product",
       "1",
       <Link href="/product-add">
-        <PieChartOutlined />
+        <PlusCircleOutlined />
+      </Link>
+    ),
+
+    getItem(
+      "Add Category",
+      "3",
+      <Link href="/category-add">
+        <PlusCircleOutlined />
       </Link>
     ),
     getItem(
       "Product List",
       "2",
       <Link href="/product-list">
-        <PieChartOutlined />
+        <UnorderedListOutlined />
       </Link>
     ),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
   ]),
 
-  getItem("User", "sub2", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Order", "sub3", <TeamOutlined />, [
+  getItem("Order", "sub3", <ShoppingOutlined />, [
     getItem(
       "Order Manage",
       "6",
@@ -73,7 +81,13 @@ const items: MenuItem[] = [
     getItem("Order Track", "8"),
   ]),
 
-  getItem("Customer", "3", <DesktopOutlined />),
+  getItem("User", "sub2", <UserOutlined />, [
+    getItem("Tom", "3"),
+    getItem("Bill", "4"),
+    getItem("Alex", "5"),
+  ]),
+
+  getItem("Customer", "4", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 
@@ -105,11 +119,25 @@ const Deshboard: React.FC = () => {
         />
       </Sider>
       <Layout className="site-layout">
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <div className="deshboard-topbar-area">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="deshboard-header-wrapper">
+                <div>
+                  <b>Deshboard</b>
+                </div>
+                <div>
+                  <BankOutlined style={{ fontSize: "150%" }} />
+                  <Avatar size={30} className="mx-2" icon={<UserOutlined />} />
+                  <AppstoreOutlined style={{ fontSize: "150%" }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Current Report</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb style={{ margin: "16px 0" }}>Current Report</Breadcrumb>
+
           <div
             style={{
               padding: 24,

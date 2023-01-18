@@ -94,6 +94,7 @@ const routesproductadd = require("./app/routes/productAddRoutes");
 const routesbillingaddress = require("./app/routes/billingAddressRoutes");
 const routescomment = require("./app/routes/commentRoutes");
 const routesproductrating = require("./app/routes/ratingRoutes");
+const routesproductcategory = require("./app/routes/categoryRoutes");
 
 app.use("/api", routes);
 app.use("/api", routesuserget);
@@ -101,6 +102,7 @@ app.use("/api", routesproductadd);
 app.use("/api", routesbillingaddress);
 app.use("/api", routescomment);
 app.use("/api", routesproductrating);
+app.use("/api", routesproductcategory);
 
 // const routess = require("./app/routes/crudRoutes");
 // app.use("/ap", routess);

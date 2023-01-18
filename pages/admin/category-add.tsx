@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Input, Select, Spin } from "antd";
+import { Button, Form, Input } from "antd";
 import {
   AppstoreOutlined,
   BankOutlined,
@@ -19,7 +19,6 @@ import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
-// import { Option } from "antd/es/mentions";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -93,7 +92,6 @@ const items: MenuItem[] = [
   getItem("Customer", "4", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -117,9 +115,8 @@ const tailFormItemLayout = {
   },
 };
 
-const ProductAdd: React.FC = () => {
+const CategoryAdd: React.FC = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState([]);
 
   const [notificationMsg, setNotificationMsg] = useState("");
   const [collapsed, setCollapsed] = useState(false);
@@ -134,22 +131,15 @@ const ProductAdd: React.FC = () => {
   };
 
   const onFinish = async (values: any) => {
-    const title = values?.title;
-    const description = values?.description;
-    const price = values?.price;
     const category = values?.category;
-    const quantity = values?.quantity;
-    const url = values?.url;
 
     try {
-      let x = await axios.post("http://localhost:8080/api/product-add", {
-        title,
-        description,
-        price,
-        category,
-        quantity,
-        url,
-      });
+      let x = await axios.post(
+        "http://localhost:8080/api/product-category-add",
+        {
+          category,
+        }
+      );
 
       if (x.status === 200) {
         console.log(x?.data?.message);
@@ -163,21 +153,6 @@ const ProductAdd: React.FC = () => {
     }
     console.log("Received values of form: ", values);
   };
-
-  const fetchdata = async () => {
-    try {
-      const datahere = await axios.get(
-        "http://localhost:8080/api/product-category-show"
-      );
-      setData(datahere.data);
-    } catch (err) {
-      console.log(err, "error");
-    }
-  };
-
-  useEffect(() => {
-    fetchdata();
-  }, []);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -204,7 +179,7 @@ const ProductAdd: React.FC = () => {
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Product Add</Breadcrumb.Item>
+            <Breadcrumb.Item>Category Add</Breadcrumb.Item>
           </Breadcrumb>
           <div
             style={{
@@ -229,87 +204,12 @@ const ProductAdd: React.FC = () => {
                       {...formItemLayout}
                     >
                       <Form.Item
-                        name="title"
-                        label="Title"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input title!",
-                          },
-                        ]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item
-                        name="description"
-                        label="Description"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input description!",
-                          },
-                        ]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item
-                        name="price"
-                        label="Price"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input price!",
-                          },
-                        ]}
-                      >
-                        <Input />
-                      </Form.Item>
-
-                      <Form.Item
+                        name="category"
                         label="Category"
-                        name="immediateParentId"
-                        hasFeedback
                         rules={[
                           {
                             required: true,
-                            message: "Please input price!",
-                          },
-                        ]}
-                      >
-                        {data && (
-                          <Select placeholder="category">
-                            {data?.map((item: any) => (
-                              <Select.Option
-                                value={item?.category}
-                                key={item?._id}
-                              >
-                                {`${item?.category}`}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        )}
-                      </Form.Item>
-
-                      <Form.Item
-                        name="quantity"
-                        label="Quantity"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input quantity!",
-                          },
-                        ]}
-                      >
-                        <Input />
-                      </Form.Item>
-
-                      <Form.Item
-                        name="url"
-                        label="Image Link"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input url!",
+                            message: "Please input category!",
                           },
                         ]}
                       >
@@ -318,7 +218,7 @@ const ProductAdd: React.FC = () => {
 
                       <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
-                          Product Add
+                          Category Add
                         </Button>
                       </Form.Item>
                     </Form>
@@ -335,4 +235,4 @@ const ProductAdd: React.FC = () => {
   );
 };
 
-export default ProductAdd;
+export default CategoryAdd;
