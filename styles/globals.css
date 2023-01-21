@@ -1429,7 +1429,7 @@ product-order-info-area */
   padding-top: 5px;
   font-weight: bold;
 }
-..comment-rating-box {
+.comment-rating-box {
   border: 1px solid gray;
   width: 600px;
   border-radius: 4px;
@@ -1450,3 +1450,5 @@ product-order-info-area */
   margin-left: -16px;
   padding-left: 19px;
 }
+
+

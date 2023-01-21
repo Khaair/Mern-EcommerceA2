@@ -83,9 +83,14 @@ const items: MenuItem[] = [
   ]),
 
   getItem("User", "sub3", <UserOutlined />, [
-    getItem("Tom", "1"),
-    getItem("Bill", "2"),
-    getItem("Alex", "3"),
+    getItem(
+      "User Manage",
+      "1",
+      <Link href="/admin/user-manage">
+        <PieChartOutlined />
+      </Link>
+    ),
+    getItem("Order Track", "2"),
   ]),
 
   getItem("Customer", "8", <DesktopOutlined />),
