@@ -52,7 +52,7 @@ const items: MenuItem[] = [
   getItem("Product", "sub1", <ShoppingCartOutlined />, [
     getItem(
       "Add Product",
-      "1",
+      "2",
       <Link href="/product-add">
         <PlusCircleOutlined />
       </Link>
@@ -67,31 +67,31 @@ const items: MenuItem[] = [
     ),
     getItem(
       "Product List",
-      "2",
+      "4",
       <Link href="/product-list">
         <UnorderedListOutlined />
       </Link>
     ),
   ]),
 
-  getItem("Order", "sub3", <ShoppingOutlined />, [
+  getItem("Order", "sub2", <ShoppingOutlined />, [
     getItem(
       "Order Manage",
-      "6",
+      "1",
       <Link href="/order-manage">
         <PieChartOutlined />
       </Link>
     ),
-    getItem("Order Track", "8"),
+    getItem("Order Track", "2"),
   ]),
 
-  getItem("User", "sub2", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
+  getItem("User", "sub3", <UserOutlined />, [
+    getItem("Tom", "1"),
+    getItem("Bill", "2"),
+    getItem("Alex", "3"),
   ]),
 
-  getItem("Customer", "4", <DesktopOutlined />),
+  getItem("Customer", "8", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 
@@ -329,6 +329,7 @@ const ProductList: React.FC = ({ posts, postsInfo }: any) => {
               onOk={handleOk}
               onCancel={handleCancel}
               width={1000}
+              footer={false}
             >
               <div className="container">
                 <div className="row ">

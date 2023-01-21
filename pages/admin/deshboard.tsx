@@ -17,6 +17,7 @@ import { Avatar, Card, MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import ProductAdd from "./product-add";
 import Link from "next/link";
+import SearchBar from "../searchBar";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -48,7 +49,7 @@ const items: MenuItem[] = [
   getItem("Product", "sub1", <ShoppingCartOutlined />, [
     getItem(
       "Add Product",
-      "1",
+      "2",
       <Link href="/product-add">
         <PlusCircleOutlined />
       </Link>
@@ -63,31 +64,31 @@ const items: MenuItem[] = [
     ),
     getItem(
       "Product List",
-      "2",
+      "4",
       <Link href="/product-list">
         <UnorderedListOutlined />
       </Link>
     ),
   ]),
 
-  getItem("Order", "sub3", <ShoppingOutlined />, [
+  getItem("Order", "sub2", <ShoppingOutlined />, [
     getItem(
       "Order Manage",
-      "6",
+      "1",
       <Link href="/order-manage">
         <PieChartOutlined />
       </Link>
     ),
-    getItem("Order Track", "8"),
+    getItem("Order Track", "2"),
   ]),
 
-  getItem("User", "sub2", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
+  getItem("User", "sub3", <UserOutlined />, [
+    getItem("Tom", "1"),
+    getItem("Bill", "2"),
+    getItem("Alex", "3"),
   ]),
 
-  getItem("Customer", "4", <DesktopOutlined />),
+  getItem("Customer", "8", <DesktopOutlined />),
   getItem("Files", "9", <FileOutlined />),
 ];
 
@@ -104,13 +105,9 @@ const Deshboard: React.FC = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
-          }}
-        />
+        <div style={{}} className="deshboard-sidebar-top-heading">
+          BD Ecommerce
+        </div>
         <Menu
           theme="dark"
           defaultSelectedKeys={["1"]}
@@ -119,22 +116,26 @@ const Deshboard: React.FC = () => {
         />
       </Sider>
       <Layout className="site-layout">
-        <div className="deshboard-topbar-area">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="deshboard-header-wrapper">
+        <div className="deshboar-top-section">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 deshboard-header-wrapper">
                 <div>
-                  <b>Deshboard</b>
+                  <SearchBar />
                 </div>
                 <div>
-                  <BankOutlined style={{ fontSize: "150%" }} />
-                  <Avatar size={30} className="mx-2" icon={<UserOutlined />} />
-                  <AppstoreOutlined style={{ fontSize: "150%" }} />
+                  <BankOutlined className="mx-3" style={{ fontSize: "150%" }} />
+                  <Avatar size={30} icon={<UserOutlined />} />
+                  <AppstoreOutlined
+                    className="mx-3"
+                    style={{ fontSize: "150%" }}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>Current Report</Breadcrumb>
 

@@ -443,7 +443,6 @@ padding-left: 97px;
   height: 49px;
   width: 352px;
   padding-left: 20px;
-  margin-top: 17px;
 }
 
 .post-profile-card{
@@ -1306,9 +1305,13 @@ background-color:   #F5F5F5;
 .deshboard-header-wrapper{
   display: flex;
   justify-content: space-between;
+  height: 91px;
+  padding: 24px;
+}
+
+.deshboar-top-section{
   background-color: #FFFFFF;
-  height: 70px;
-  padding: 20px;
+
 }
 
 .ecommerce-loader-wrapper{
@@ -1319,12 +1322,15 @@ background-color:   #F5F5F5;
 }
 
 
+.deshboard-header-icon{
+  padding-right: 10px;
+}
+
 /* 
 product-order-info-area */
 
 .card-product-order-info{
     background-color: white;
-    margin-top: 20px;
     width: 100%;
     border-radius: 5px;
     padding: 20px 20px;
@@ -1336,7 +1342,6 @@ product-order-info-area */
 }
 .card-product-rating-info{
   background-color: white;
-  margin-top: 20px;
   width: 100%;
   border-radius: 5px;
   padding: 20px 20px;
@@ -1415,3 +1420,33 @@ product-order-info-area */
   padding-right: 50px;
 }
 
+.deshboard-sidebar-top-heading{
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  text-align: center;
+  padding-top: 5px;
+  font-weight: bold;
+}
+..comment-rating-box {
+  border: 1px solid gray;
+  width: 600px;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.comment-rating-box {
+  border: 1px solid gray;
+  width: 600px;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.searchres-details-show{
+  background-color: white;
+  padding: 5px;
+  width: 355px;
+  margin-left: -16px;
+  padding-left: 19px;
+}

@@ -45,7 +45,7 @@ export default function Header() {
                 </Link>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-4 mt-3">
               <SearchBar />
             </div>
             <div className="col-lg-4">
@@ -73,8 +73,11 @@ export default function Header() {
                       </div>
                     </div>
                   </li>
-                  <li role="button" onClick={handleadminrouter}>
-                    <Avatar size={30} icon={<UserOutlined />} />
+
+                  <li role="button">
+                    <Link href="/admin">
+                      <Avatar size={30} icon={<UserOutlined />} />
+                    </Link>
                   </li>
                 </ul>
               </div>

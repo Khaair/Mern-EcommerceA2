@@ -421,9 +421,9 @@ function Details({
 
                     <button
                       onClick={() => sendRatingtoApp(singlePostInfo?._id)}
-                      className="btn btn-primary mt-4"
+                      className="btn btn-info mt-4"
                     >
-                      Rating Add
+                      Submit Rating
                     </button>
                   </div>
                 </div>
@@ -431,13 +431,17 @@ function Details({
               <div className="details-page-left-side-wrapper">
                 <form action="/action_page.php">
                   <div className="mb-3 mt-3">
-                    <label htmlFor="comment">Comments:</label>
+                    <label className="mb-2" htmlFor="comment">
+                      Comments:
+                    </label>
+                    <br />
                     <textarea
-                      className="form-control"
+                      className="comment-rating-box"
+                      name="comment"
+                      rows={4}
+                      cols={50}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      style={{ marginTop: "12px" }}
-                      placeholder="Enter Description"
                     />
                   </div>
                   <button

@@ -82,11 +82,11 @@ function SearchBar({
                             <div className="row">
                               <div className="col-lg-12">
                                 <Link href={`/posts/${item?._id}`}>
-                                  <Card>
-                                    <div key={index} className="searchres">
+                                  <div className="searchres-details-show">
+                                    <div key={index}>
                                       <h3>{item?.title} </h3>
                                     </div>
-                                  </Card>
+                                  </div>
                                 </Link>
                               </div>
                             </div>
