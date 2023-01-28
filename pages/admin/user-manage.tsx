@@ -245,11 +245,11 @@ const UserManage: React.FC = ({ users, userInfo }: any) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {userdata?.map((order: any, index: any) => {
+                        {userdata?.map((user: any, index: any) => {
                           return (
                             <tr key={index}>
-                              <td>{order?.username}</td>
-                              <td>{order?.email}</td>
+                              <td>{user?.username}</td>
+                              <td>{user?.email}</td>
 
                               <td>
                                 <i

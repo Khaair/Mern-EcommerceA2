@@ -120,7 +120,7 @@ const tailFormItemLayout = {
 const ProductAdd: React.FC = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-
+  const [selectedValue, setSelectedValue] = useState("");
   const [notificationMsg, setNotificationMsg] = useState("");
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -133,13 +133,30 @@ const ProductAdd: React.FC = () => {
     });
   };
 
+  const fetchdata = async () => {
+    try {
+      const datahere = await axios.get(
+        "http://localhost:8080/api/product-category-show"
+      );
+      setData(datahere.data);
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
   const onFinish = async (values: any) => {
     const title = values?.title;
     const description = values?.description;
     const price = values?.price;
-    const category = values?.category;
+    const category = selectedValue;
     const quantity = values?.quantity;
     const url = values?.url;
+
+    console.log("category", category);
 
     try {
       let x = await axios.post("http://localhost:8080/api/product-add", {
@@ -163,21 +180,6 @@ const ProductAdd: React.FC = () => {
     }
     console.log("Received values of form: ", values);
   };
-
-  const fetchdata = async () => {
-    try {
-      const datahere = await axios.get(
-        "http://localhost:8080/api/product-category-show"
-      );
-      setData(datahere.data);
-    } catch (err) {
-      console.log(err, "error");
-    }
-  };
-
-  useEffect(() => {
-    fetchdata();
-  }, []);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -276,18 +278,19 @@ const ProductAdd: React.FC = () => {
                           },
                         ]}
                       >
-                        {data && (
-                          <Select placeholder="category">
-                            {data?.map((item: any) => (
-                              <Select.Option
-                                value={item?.category}
-                                key={item?._id}
-                              >
-                                {`${item?.category}`}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        )}
+                        <Select
+                          placeholder="category"
+                          onChange={(value) => setSelectedValue(value)}
+                        >
+                          {data?.map((item: any) => (
+                            <Select.Option
+                              value={item?.category}
+                              key={item?._id}
+                            >
+                              {`${item?.category}`}
+                            </Select.Option>
+                          ))}
+                        </Select>
                       </Form.Item>
 
                       <Form.Item
