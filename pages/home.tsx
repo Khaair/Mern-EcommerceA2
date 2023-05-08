@@ -33,21 +33,30 @@ function EcomHome({ posts, postsInfo }: any) {
     title: any;
     url: any;
   }) => {
-    const productId = productDetails.productId;
-    const price = productDetails.price;
-    const title = productDetails.title;
-    const url = productDetails.url;
+    const { productId, price, title, url } = productDetails;
 
     // Get the existing cart from local storage
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    if (cart) {
-      setItems(cart);
+
+    // Check if the product already exists in the cart
+    const productIndex = cart.findIndex(
+      (item: any) => item.productId === productId
+    );
+    console.log("productIndex", productIndex);
+    if (productIndex !== -1) {
+      alert("Already in cart");
+      return;
     }
+
     // Add the new product to the cart
     cart.push({ productId, price, title, url });
 
     // Save the updated cart back to local storage
     localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart");
+
+    console.log("cart", cart);
   };
 
   const handlewovelfilter = (category: string) => {
